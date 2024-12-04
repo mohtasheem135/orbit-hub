@@ -4,7 +4,27 @@
 
 body {
   font-family: Arial, Helvetica, sans-serif;
+  overflow: auto !important; 
 }
+
+.custom-scrollbar::-webkit-scrollbar {
+  width: 6px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: #f0f0f0; /* Track color */
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background-color: #ffbb99; /* Scrollbar color */
+  border-radius: 4px;
+  border: 1px solid transparent; /* Creates padding around the thumb */
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background-color: #555; /* Hover state for scrollbar */
+}
+
 
 @layer base {
   :root {

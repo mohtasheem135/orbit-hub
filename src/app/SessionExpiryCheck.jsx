@@ -13,6 +13,7 @@ const SessionExpiryCheck = () => {
 
     if (sessionExpiry && Date.now() > sessionExpiry) {
       dispatch(logout());
+      window.location.reload()
     }
   }, [dispatch]);
 

@@ -1,77 +1,51 @@
 "use client";
 
-import React, { useEffect } from "react";
-import { useState } from "react";
-import { useLogin } from "../../api/hooks/Auth/useLogin";
-// import { isAuthenticated } from '@/utils/isAuthenticated';
-import { useSelector } from "react-redux";
-import Cookies from "js-cookie";
+import React from "react";
+
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import LoginForm from "@/components/Forms/LoginForm";
+import SignupForm from "@/components/Forms/SignupForm";
 
 export default function LoginPage() {
-  //   const router = useRouter();
-  const [username, setUsername] = useState("tony_stark");
-  const [email, setEmail] = useState("tony@stark.com");
-  const [password, setPassword] = useState("ironman");
-
-  const [authStatus, setAuthStatus] = useState(null);
-
-  const { handleLogin, message, loading } = useLogin();
-
-  const onSubmit = (e) => {
-    e.preventDefault();
-    handleLogin(username, email, password);
-  };
-
-  // @ts-ignore
-  const { userData, isLoggedIn, sessionExpiry } = useSelector(
-    (state) => state.auth
-  );
-  useEffect(() => {
-      // const date = new Date(sessionExpiry);
-      // console.log("FFFFFXXXXXXXXXXXX ", date);
-      // Set auth data in cookies when userData is available
-      Cookies.set("auth", isLoggedIn, { expires: 1 / 288 }); // Expires in 5 minutes
-      // console.log("XXXX Cookie Set:", Cookies.get()); // Check if the cookie is set correctly
-  }, [isLoggedIn]);
-
   return (
-    <div>
-      <h1>Login</h1>
-      <form
-        onSubmit={onSubmit}
-        className="border-2 border-black flex flex-col space-y-10 w-[350px]"
-      >
-        <input
-          type="username"
-          value={username}
-          className="border-2 border-black text-black"
-          onChange={(e) => setUsername(e.target.value)}
-          placeholder="Username"
-          required
-        />
-        <input
-          type="email"
-          value={email}
-          className="border-2 border-black"
-          onChange={(e) => setEmail(e.target.value)}
-          placeholder="Email"
-          required
-        />
-        <input
-          type="password"
-          value={password}
-          className="border-2 border-black"
-          onChange={(e) => setPassword(e.target.value)}
-          placeholder="Password"
-          required
-        />
-        <button type="submit" disabled={loading}>
-          {loading ? "Logging in..." : "Login"}
-        </button>
-      </form>
-      {message && <span>{message}</span>}
-      <p>redux: {userData?.userName}</p>
-      {/* <p className="text-black">isAuthenticated: {auth}</p> */}
+    <div className="flex justify-center items-center h-full">
+      <Tabs defaultValue="login" className="w-[400px]">
+        <TabsList className="grid w-full grid-cols-2">
+          <TabsTrigger value="login">Login</TabsTrigger>
+          <TabsTrigger value="signup">Sign-Up</TabsTrigger>
+        </TabsList>
+        <TabsContent value="login">
+          <Card>
+            <CardHeader>
+              <CardTitle>Login</CardTitle>
+              <CardDescription>Login to your account</CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-2">
+              <LoginForm />
+            </CardContent>
+          </Card>
+        </TabsContent>
+        <TabsContent value="signup">
+          <Card>
+            <CardHeader>
+              <CardTitle>Sign Up</CardTitle>
+              <CardDescription>Create a new account.</CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-2">
+              <SignupForm />
+            </CardContent>
+          </Card>
+        </TabsContent>
+      </Tabs>
     </div>
   );
 }

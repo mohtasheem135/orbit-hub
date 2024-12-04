@@ -6,8 +6,11 @@ import "./globals.css";
 import { Provider } from "react-redux";
 import { store, persistor } from "@/app/redux/store/index";
 import { PersistGate } from "redux-persist/integration/react";
-import SessionExpiryCheck from './SessionExpiryCheck';  // Import the session expiry check component
-
+import SessionExpiryCheck from "./SessionExpiryCheck"; // Import the session expiry check component
+import { Toaster } from "@/components/ui/toaster";
+import useDeviceType from "@/utils/useDeviceType";
+import Navbar from "@/components/Navbar/Navbar";
+import { useEffect } from "react";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -30,7 +33,8 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  
+  const deviceType = useDeviceType();
+
   return (
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
@@ -39,7 +43,9 @@ export default function RootLayout({
             className={`${geistSans.variable} ${geistMono.variable} antialiased`}
           >
             <SessionExpiryCheck />
+            {deviceType === "desktop" ? <Navbar /> : ""}
             {children}
+            <Toaster />
           </body>
         </html>
       </PersistGate>
