@@ -40,7 +40,7 @@ export default function RootLayout({
       <PersistGate loading={null} persistor={persistor}>
         <html lang="en">
           <body
-            className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+            className={`${geistSans.variable} ${geistMono.variable} antialiased custom-scrollbar`}
           >
             <SessionExpiryCheck />
             {deviceType === "desktop" ? <Navbar /> : ""}

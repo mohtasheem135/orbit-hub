@@ -1,8 +1,10 @@
+// Get the subItems of an Item added by a user
+
 import { useState } from "react";
 import { fetchAllSubItems } from "../../services/subItemService";
 import { handleApiErrors } from "@/utils/handleErrors";
 
-export const getAllSubItems = () => {
+export const getAllSubItemsOfUser = () => {
   const [subItems, setSubItems] = useState([]);
   const [isSubItemLoading, setSubItemIsLoading] = useState(true);
   const [subItemError, setSubItemError] = useState(null);

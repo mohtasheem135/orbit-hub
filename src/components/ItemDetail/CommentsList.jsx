@@ -18,6 +18,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { SquarePlus } from "lucide-react";
 import CommentForm from "../Forms/CommentForm";
+import { useEffect, useState } from "react";
 
 const CommentsList = ({
   comments,
@@ -25,12 +26,57 @@ const CommentsList = ({
   userId,
   isCommentsLoading,
 }) => {
+  const [scrolledPastThreshold, setScrolledPastThreshold] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const currentScrollY =
+        window.scrollY || document.documentElement.scrollTop;
+
+      if (currentScrollY >= 90) {
+        setScrolledPastThreshold(true);
+      } else {
+        setScrolledPastThreshold(false);
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, [scrolledPastThreshold]);
+
+  if (!selectedSubItemId) {
+    return (
+      <div
+        className={`w-[30%] flex h-[100px] justify-between border-0 border-black ${
+          scrolledPastThreshold &&
+          "w-[26%] h-[100px] fixed right-[100px] top-[10px]"
+        }`}
+      >
+        <Card className="w-full">
+          <CardHeader>
+            <CardTitle>Subitem not selected</CardTitle>
+            <CardDescription>
+              Select any subitem to view its comments.
+            </CardDescription>
+          </CardHeader>
+        </Card>
+      </div>
+    );
+  }
+
   return (
-    <div className="w-[30%] border-0 border-black">
+    <div
+      id="fixed-container"
+      className={`w-[30%] flex h-[700px] justify-between border-0 border-black ${
+        scrolledPastThreshold &&
+        "w-[26%] h-[685px] fixed right-[100px] top-[10px]"
+      }`}
+    >
       {comments.length > 0 ? (
         <Card className="">
           <CardHeader>
-            <CardTitle>Comments - {selectedSubItemId}</CardTitle>
+            <CardTitle>Comments</CardTitle>
             <CardDescription>
               <div className="flex justify-between items-center">
                 <div>

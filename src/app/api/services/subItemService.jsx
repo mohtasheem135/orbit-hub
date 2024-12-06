@@ -7,6 +7,13 @@ export const fetchAllSubItems = async (itemId, userId) => {
   return response.data;
 };
 
+export const fetchAllSubItemsOfItem = async (itemId) => {
+  const response = await axiosInstance.get(
+    `/subitems/item/${itemId}`
+  );
+  return response.data;
+};
+
 export const createSubitem = async (subItemData, userId, itemId) => {
   try {
     const response = await axiosInstance.post(
